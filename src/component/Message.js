@@ -3,8 +3,8 @@ const Message = (props)=>{
     return (        
         <div className="message p-4" aria-label="message">
             <div className="message-header flex w-full">
-            <div className="profile-wrapper shrink-0 w-20 h-20 rounded-full overflow-hidden">
-                <img className="w-20" src="https://bit.ly/3UJrYQz"/>
+            <div className="profile-wrapper shrink-0 w-20 h-20 rounded-full relative overflow-hidden">
+                <img className="absolute" src="https://bit.ly/3UJrYQz"/>
             </div>
 
             <div className="message-right shrink ml-4 w-full flex justify-between">
