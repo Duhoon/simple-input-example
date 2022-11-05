@@ -1,23 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
+import Send from "./component/Send";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="flex justify-center">
+        <div className="mt-2 content-width">
+          <div className="box-colored" aria-label="title">
+            <div className="p-4 text-xl text-center">
+              Simple Input Example
+            </div>
+          </div>
+          <Send></Send>
+        </div>
+      </div>
+      <div className="" aria-label="messages-wrapper">
+        
+      </div>
     </div>
   );
 }
