@@ -1,8 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
+import {useState} from "react";
 import Send from "./component/Send";
+import Message from "./component/Message";
 
 function App() {
+  const [message, setMessage] = useState("");
+
+  const inputHandler = (e)=>{
+    setMessage(e.target.value);
+  }
+
   return (
     <div className="App">
       <div className="flex justify-center">
@@ -12,11 +20,19 @@ function App() {
               Simple Input Example
             </div>
           </div>
-          <Send></Send>
+          <Send inputHandler={inputHandler}></Send>
         </div>
       </div>
-      <div className="" aria-label="messages-wrapper">
-        
+      <div className="flex justify-center" aria-label="messages-wrapper">
+        <div className="content-width">
+          <Message></Message>
+          <Message></Message>
+          <Message></Message>
+          <Message></Message>
+          <Message></Message>
+          <Message></Message>
+          <Message></Message>
+        </div>
       </div>
     </div>
   );

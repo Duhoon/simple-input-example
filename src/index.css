@@ -23,6 +23,20 @@
     @apply w-full p-2 focus:rounded-xl focus:ring focus:ring-fuchsia-200 placeholder:italic placeholder:text-slate-300 ;
     outline : none;
   }
+
+  /* .message {
+    @apply ;
+    
+  } */
+
+  .message-body {
+    min-height : 150px;
+  }
+
+  .message {
+    @apply border-b-2;
+  }
+  
 }
 
 @tailwind utilities;
