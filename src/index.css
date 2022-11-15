@@ -7,20 +7,29 @@
 
 @layer components {
   .box-colored {
-    @apply w-full rounded-xl font-bold text-white bg-fuchsia-700 hover:bg-fuchsia-800
+    @apply w-full rounded-xl font-bold text-white bg-fuchsia-700 hover:bg-fuchsia-800 ;
   }
 
   .btn-primary {
     @apply rounded-xl p-3 font-bold text-white bg-fuchsia-700 hover:bg-fuchsia-800 active:bg-fuchsia-900 
-    focus:ring focus:ring-fuchsia-300
+    focus:ring focus:ring-fuchsia-300 ;
+  }
+
+  .btn-image-upload{
+    @apply cursor-pointer;
   }
 
   .card {
-    @apply w-full border-y-2 p-4
+    @apply w-full
   }
 
   .textarea-form {
-    @apply w-full p-2 focus:rounded-xl focus:ring focus:ring-fuchsia-200 placeholder:italic placeholder:text-slate-300 ;
+    @apply w-full p-2 rounded-xl focus:ring focus:ring-fuchsia-200 placeholder:italic placeholder:text-slate-300 ;
+    outline : none;
+  }
+
+  .update-textarea {
+    @apply w-full p-2 rounded-xl ring-fuchsia-200 placeholder:italic placeholder:text-slate-300 ;
     outline : none;
   }
 
@@ -29,11 +38,13 @@
     
   } */
 
-  .profile-wrapper img{
+  .profile-wrapper img, .image-wrapper img{
     top : 50%;
     left : 50%;
     transform : translate(-50%, -50%);
   }
+
+  
 
   .message-body {
     min-height : 150px;
@@ -42,7 +53,21 @@
   .message {
     @apply border-b-2;
   }
+
+  .dropdown {
+    transform: translate(-100%, 30%);
+  }
   
+  .dropdown .dropdown-btn {
+    @apply w-full p-2  hover:bg-slate-100 active:bg-slate-200 ;
+  }
+
+  .image-upload-input{
+    display:none;
+  }
+
+
+
 }
 
 @tailwind utilities;
