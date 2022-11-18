@@ -8,7 +8,7 @@
         flex justify-end fixed;
         justify-items: end;
         margin-right : 20px;
-        width : 480px;
+        width : 25vw;
         height : 100vh;
     }
 
@@ -35,5 +35,13 @@
 
     .btn-nav h2{
         padding-top : 2px;
+    }
+
+    .copyright {
+        @apply absolute bottom-10 right-20;
+    }
+
+    .copyright .copyright-line {
+        @apply border w-40 mb-5
     }
 }

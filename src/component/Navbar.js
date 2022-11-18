@@ -24,6 +24,10 @@ const Navbar = ()=>{
                     <h2>Login</h2>
                 </button>
             </div>
+            <div className="copyright">
+                <div className="copyright-line"></div>
+                <p>©JejuAlrock</p>
+            </div>
         </nav>
     )
 }
