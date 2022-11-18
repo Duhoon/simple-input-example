@@ -22,8 +22,9 @@ const Send = ({sendMessage})=>{
     }
 
     const sendHandler = (e)=>{
-        sendMessage({content:message});
+        sendMessage({content:message,image});
         setMessage("");
+        setImage("");
     }
 
     useEffect(()=>{

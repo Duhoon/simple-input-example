@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+
+
+@layer components {
+    nav {
+        @apply pr-6 bg-zinc-50 rounded-tr-3xl rounded-br-3xl
+        flex justify-end fixed;
+        justify-items: end;
+        margin-right : 20px;
+        width : 480px;
+        height : 100vh;
+    }
+
+    .nav-group {
+        @apply mt-20;
+        
+    }
+
+    .btn-nav {
+        @apply w-64 py-4 px-8 rounded-xl
+        mb-2
+        font-bold text-lg
+        flex
+        hover:bg-zinc-200;
+    }
+
+    .btn-nav:last-child {
+        @apply mb-0;
+    }
+
+    .btn-nav svg{
+        @apply mr-2
+    }
+
+    .btn-nav h2{
+        padding-top : 2px;
+    }
+}

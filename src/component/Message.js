@@ -68,6 +68,14 @@ const Message = (props)=>{
                 </div>
             </div>
             </div> {/* Message Header */}
+
+        {message.image ? 
+            <div className="image-wrapper my-3 w-full h-[300px] rounded-xl border-radius-full relative overflow-hidden">
+                <img className="absolute" src={message.image}/>
+            </div> 
+            : <></>
+        }
+
             <div className="message-body py-4">
             {isUpdate ?
             <div>

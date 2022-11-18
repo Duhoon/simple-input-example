@@ -1,18 +1,19 @@
 import logo from './logo.svg';
 import './App.css';
 import {useState, useEffect} from "react";
+import Navbar from "./component/Navbar.js";
 import Send from "./component/Send";
 import Message from "./component/Message";
 import axios from 'axios';
-import { isContentEditable } from '@testing-library/user-event/dist/utils';
 
 function App() {
   
   const [data, setData] = useState([]);
+  const serverHost = "http://localhost:4000";
 
   const sendMessage = async (message)=>{
     message.userId = "@JejuAlrock";
-    const requestURL = "http://localhost:4000/send"
+    const requestURL = `${serverHost}/send`;
     const result = await axios.post(requestURL, {message})
     .then(result=>result)
     .catch(err=>err);
@@ -28,7 +29,7 @@ function App() {
   }
 
   const getMessages =  async ()=>{
-    const result = await axios.get("http://localhost:4000/")
+    const result = await axios.get(serverHost)
     .then(result=>result)
     .catch(err=> err);
 
@@ -37,7 +38,7 @@ function App() {
   }
 
   const updateMessage = async (message)=>{
-    const requestURL = "http://localhost:4000/update"
+    const requestURL = `${serverHost}/update`;
     const result = await axios.post(requestURL, {message})
     .then(result=>result)
     .catch(err=>err);
@@ -49,7 +50,7 @@ function App() {
   }
 
   const removeMessage = async (messageId)=>{
-    const requestURL = "http://localhost:4000/remove";
+    const requestURL = `${serverHost}/remove`;
     const result = await axios.post(requestURL, {message: {messageId}})
     .then(result=>result)
     .catch(err=>err);
@@ -62,9 +63,18 @@ function App() {
     getMessages();
   }, [])
 
+  useEffect(()=>{
+    let count = 0;
+    return ()=>{
+      count++;
+      console.log(count)
+    }
+  }, [data]);
+
   return (
     <div className="App">
-      <div className="flex justify-center">
+      <Navbar></Navbar>
+      <div className="wrapper" aria-label="plaza">
         <div className="mt-2 content-width">
           <div className="box-colored" aria-label="title">
             <div className="p-4 text-xl text-center">
@@ -75,12 +85,10 @@ function App() {
             <Send sendMessage={sendMessage}></Send>
           </div>
         </div>
-      </div>
-      <div className="flex justify-center" aria-label="messages-wrapper">
         <div className="content-width">
-          {data.map(message=>{
-            return <Message message={message} key={message._id} removeMessage={removeMessage} updateMessage={updateMessage}></Message>
-          })}
+            {data.map(message=>{
+              return <Message message={message} key={message._id} removeMessage={removeMessage} updateMessage={updateMessage}></Message>
+            })}
         </div>
       </div>
     </div>
