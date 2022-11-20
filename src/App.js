@@ -82,8 +82,16 @@ function App() {
     <div className="App">
       <Navbar></Navbar>
       <Routes>
-        <Route path="/" element={<Plaza data={data} sendMessage={sendMessage} removeMessage={removeMessage} updateMessage={updateMessage}></Plaza>}></Route>
-        <Route path="/mypage" element={<Mypage data={data} sendMessage={sendMessage} removeMessage={removeMessage} updateMessage={updateMessage}></Mypage>}></Route>
+        <Route path="/" 
+          element={
+            <Plaza data={data} sendMessage={sendMessage} removeMessage={removeMessage} updateMessage={updateMessage}/>
+          }
+        /> 
+        <Route path="/mypage" 
+          element={
+            <Mypage data={data} sendMessage={sendMessage} removeMessage={removeMessage} updateMessage={updateMessage}></Mypage>
+          }
+        />
         <Route path="/login" element={<Login></Login>}></Route>
       </Routes>
     </div>

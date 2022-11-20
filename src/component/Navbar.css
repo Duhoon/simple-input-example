@@ -21,8 +21,6 @@
         @apply w-16 h-16 border-8 border-fuchsia-700 rounded-full
         font-bold text-xl
         hover:bg-zinc-200;
-        
-
     }
 
     .btn-nav {
