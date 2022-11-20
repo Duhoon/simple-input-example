@@ -2,7 +2,6 @@ import {useState} from "react";
 import Send from "./Send";
 import Dropdown from "./Dropdown";
 
-
 const Message = (props)=>{
     const [content, setContent] = useState(props.message.content)
     const [openReply, setOpenReply] = useState(false);

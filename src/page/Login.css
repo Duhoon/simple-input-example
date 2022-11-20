@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+
+@layer components {
+    .login-form {
+        @apply border-4 border-zinc-100 rounded-3xl px-16
+        flex flex-col justify-center;
+        height : 98vh;
+    }
+
+    .login-form .input-group {
+        @apply w-full
+        mb-2;
+    }
+    
+    .login-form .input-group:last-child{
+        @apply mb-0;
+    }
+
+    .login-form .input-group input{
+        @apply w-full py-2 px-4 rounded-xl ring ring-fuchsia-200
+        text-lg font-bold placeholder:italic placeholder:text-slate-300
+        mb-8;
+        outline:none;
+    }
+
+    .login-form .btn-primary{
+        @apply w-full mr-2;
+    }
+
+    .login-form .btn-primary:last-child{
+        @apply mr-0;
+    }
+
+    .login-form .btn-group{
+        @apply mb-8;
+    }
+
+    .login-form .btn-group:last-child{
+        @apply mb-0;
+    }
+}
+
+@tailwind utilities;
