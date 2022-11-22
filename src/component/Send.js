@@ -1,8 +1,9 @@
 import {useState, useEffect} from "react";
 
-const Send = ({sendMessage})=>{
+const Send = ({messageId, sendMessage, closeReplyHandler})=>{
     const [message, setMessage] = useState("");
     const [image, setImage] = useState("");
+    const [isReply, setIsReply] = useState(false);
 
     const messageChangeHandler = (e)=>{
         setMessage(e.target.value);
@@ -18,11 +19,15 @@ const Send = ({sendMessage})=>{
         }
 
         reader.readAsDataURL(img);
-        
     }
 
     const sendHandler = (e)=>{
-        sendMessage({content:message,image});
+        if (!isReply)
+            sendMessage({content:message,image});
+        else {
+            sendMessage({content:message,image, msgId:messageId})
+            closeReplyHandler()
+        }
         setMessage("");
         setImage("");
     }
@@ -30,6 +35,12 @@ const Send = ({sendMessage})=>{
     useEffect(()=>{
         console.log(image);
     }, [image])
+
+    useEffect(()=>{
+        if (messageId){
+            setIsReply(true);
+        }
+    }, [])
 
     return (
         <div className="card">

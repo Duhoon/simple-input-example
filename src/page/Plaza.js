@@ -1,7 +1,8 @@
 import Send from "../component/Send";
 import Message from "../component/Message";
+import {Fragment} from "react";
 
-const Plaza = ({data, sendMessage, removeMessage, updateMessage})=>{
+const Plaza = ({data, sendMessage, sendReply, removeMessage, updateMessage})=>{
 
     return (
         <div className="wrapper" aria-label="plaza">
@@ -17,7 +18,13 @@ const Plaza = ({data, sendMessage, removeMessage, updateMessage})=>{
             </div>
             <div className="content-width">
                 {data.map(message=>{
-                    return <Message message={message} key={message._id} removeMessage={removeMessage} updateMessage={updateMessage}></Message>
+                    return (
+                        <Fragment key={message._id}>
+                            <Message message={message}  sendMessage={sendReply} removeMessage={removeMessage} updateMessage={updateMessage}>
+                            </Message>
+                            {message.reply.map(reply=>{return <Message message={reply} key={reply._id} isReply={true}></Message>})}
+                        </Fragment>
+                    )
                 })} 
             </div>
       </div>

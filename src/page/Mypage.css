@@ -3,7 +3,7 @@
 
 @layer components {
     .mypage-bg {
-        @apply w-full h-[300px] rounded-t-3xl border-4 border-fuchsia-700
+        @apply w-full h-[300px] rounded-t-3xl border-2 border-slate-300 
         relative overflow-hidden ;
     }
 

@@ -30,7 +30,15 @@ function App() {
   }
 
   const sendReply = async (message)=>{
+    message.userId = "@JejuAlrock";
+    const requestURL = `${serverHost}/reply`;
+    const result = await axios.post(requestURL, {message})
+    .then(result=>result)
+    .catch(err=>err);
 
+    if(result.status === 200){
+      getMessages();
+    } else console.log(result);
   }
 
   const getMessages = ()=>{
@@ -70,13 +78,12 @@ function App() {
   }, [])
 
   useEffect(()=>{
-    let count = 0;
-    return ()=>{
-      count++;
-      console.log(count)
-    }
   }, [data]);
 
+
+  const HandleMessage = {
+    sendMessage, removeMessage, updateMessage, sendReply
+  }
 
   return (
     <div className="App">
@@ -84,12 +91,12 @@ function App() {
       <Routes>
         <Route path="/" 
           element={
-            <Plaza data={data} sendMessage={sendMessage} removeMessage={removeMessage} updateMessage={updateMessage}/>
+            <Plaza data={data} sendMessage={sendMessage} removeMessage={removeMessage} updateMessage={updateMessage} sendReply={sendReply}/>
           }
         /> 
         <Route path="/mypage" 
           element={
-            <Mypage data={data} sendMessage={sendMessage} removeMessage={removeMessage} updateMessage={updateMessage}></Mypage>
+            <Mypage data={data} sendMessage={sendMessage} removeMessage={removeMessage} updateMessage={updateMessage} sendReply={sendReply}></Mypage>
           }
         />
         <Route path="/login" element={<Login></Login>}></Route>

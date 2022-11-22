@@ -1,8 +1,9 @@
 import "./Mypage.css";
 import Send from "../component/Send";
 import Message from "../component/Message";
+import { Fragment } from "react";
 
-const Mypage = ({data, sendMessage, removeMessage, updateMessage})=>{
+const Mypage = ({data, sendMessage, sendReply, removeMessage, updateMessage})=>{
     return (
         <div className="wrapper">
             <div className="content-width">
@@ -25,9 +26,15 @@ const Mypage = ({data, sendMessage, removeMessage, updateMessage})=>{
                 <div className="mb-4 py-4 border-b-2">
                     <Send sendMessage={sendMessage}></Send>
                 </div>
-                {data.map(message=>{
-                    return <Message message={message} key={message._id} removeMessage={removeMessage} updateMessage={updateMessage}></Message>
-                })} 
+        {data.map(message=>{
+            return (
+                <Fragment key={message._id}>
+                    <Message message={message}  sendMessage={sendReply} removeMessage={removeMessage} updateMessage={updateMessage}>
+                    </Message>
+                    {message.reply.map(reply=>{return <Message message={reply} key={reply._id} isReply={true}></Message>})}
+                </Fragment>
+            )
+        })}
             </div>
         </div>
     )
