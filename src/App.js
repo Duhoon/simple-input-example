@@ -1,4 +1,3 @@
-import './App.css';
 import {useState, useEffect} from "react";
 import axios from 'axios';
 
@@ -9,6 +8,8 @@ import Navbar from "./component/Navbar.js";
 import Plaza from "./page/Plaza";
 import Login from "./page/Login";
 import Mypage from "./page/Mypage";
+
+// Routing Tool
 import {Routes, Route} from "react-router-dom";
 
 function App() {
@@ -91,12 +92,24 @@ function App() {
       <Routes>
         <Route path="/" 
           element={
-            <Plaza data={data} sendMessage={sendMessage} removeMessage={removeMessage} updateMessage={updateMessage} sendReply={sendReply}/>
+            <Plaza 
+              data={data} 
+              sendMessage={sendMessage} 
+              removeMessage={removeMessage} 
+              updateMessage={updateMessage} 
+              sendReply={sendReply}
+            />
           }
         /> 
         <Route path="/mypage" 
           element={
-            <Mypage data={data} sendMessage={sendMessage} removeMessage={removeMessage} updateMessage={updateMessage} sendReply={sendReply}></Mypage>
+            <Mypage 
+              data={data} 
+              sendMessage={sendMessage} 
+              removeMessage={removeMessage} 
+              updateMessage={updateMessage} 
+              sendReply={sendReply}
+            />
           }
         />
         <Route path="/login" element={<Login></Login>}></Route>

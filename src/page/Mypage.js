@@ -23,7 +23,7 @@ const Mypage = ({data, sendMessage, sendReply, removeMessage, updateMessage})=>{
                 </p>
             </div>
             <div className="contents">
-                <div className="mb-4 py-4 border-b-2">
+                <div className="mb-4 py-4 px-4 border-b-2">
                     <Send sendMessage={sendMessage}></Send>
                 </div>
         {data.map(message=>{
