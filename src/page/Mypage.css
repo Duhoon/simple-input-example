@@ -26,6 +26,9 @@
 
     .introduction{
         @apply py-4 px-8 border-b-2 mb-4;
-        min-height: 150px;
+    }
+
+    .introduction .explain{
+        min-height: 100px;
     }
 }

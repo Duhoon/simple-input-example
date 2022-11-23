@@ -1,6 +1,10 @@
+// Tools
 import {useState, useEffect} from "react";
 
-const Send = ({messageId, sendMessage, closeReplyHandler})=>{
+// Controller
+import controller from "../controller/index.js";
+
+const Send = ({messageId, closeReplyHandler})=>{
     const [message, setMessage] = useState("");
     const [image, setImage] = useState("");
     const [isReply, setIsReply] = useState(false);
@@ -23,9 +27,9 @@ const Send = ({messageId, sendMessage, closeReplyHandler})=>{
 
     const sendHandler = (e)=>{
         if (!isReply)
-            sendMessage({content:message,image});
+        controller.sendMessage({content:message,image});
         else {
-            sendMessage({content:message,image, msgId:messageId})
+            controller.sendMessage({content:message,image, toReply:messageId})
             closeReplyHandler()
         }
         setMessage("");

@@ -1,29 +1,48 @@
+// Tools
+import {useState, useEffect} from 'react';
+import axios from "axios";
+
+// Components
 import Send from "../component/Send";
 import Message from "../component/Message";
-import {Fragment} from "react";
 
-const Plaza = ({data, sendMessage, sendReply, removeMessage, updateMessage})=>{
+const Plaza = ({sendMessage})=>{
+    const [data, setData] = useState([]);
+
+    const serverHost =  "http://localhost:4000";
+
+    const getMessages = ()=>{
+        axios.get(serverHost)
+        .then(result=>{
+            setData(result.data);
+        })
+        .catch(err=>{
+            return new Error(err);
+        });
+    }
+
+    const clickMessage = (e)=>{
+        if (e.target !== e.currentTarget) return;
+    }
+
+    useEffect(()=>{
+        getMessages();
+    },[])
 
     return (
         <div className="wrapper" aria-label="plaza">
             <div className="content-width">
                 <div className="box-colored" aria-label="title">
-                    <div className="p-4 text-xl text-center">
-                    ZET
-                    </div>
+                    <div className="p-4 text-xl text-center">ZET</div>
                 </div>
                 <div className="mt-2 content-width border-b-2 p-4">
-                    <Send sendMessage={sendMessage}></Send>
+                    <Send></Send>
                 </div>
             </div>
             <div className="content-width">
                 {data.map(message=>{
                     return (
-                        <Fragment key={message._id}>
-                            <Message message={message}  sendMessage={sendReply} removeMessage={removeMessage} updateMessage={updateMessage}>
-                            </Message>
-                            {message.reply.map(reply=>{return <Message message={reply} key={reply._id} isReply={true}></Message>})}
-                        </Fragment>
+                        <Message key={message._id} message={message}></Message>
                     )
                 })} 
             </div>

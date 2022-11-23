@@ -8,6 +8,7 @@ import Navbar from "./component/Navbar.js";
 import Plaza from "./page/Plaza";
 import Login from "./page/Login";
 import Mypage from "./page/Mypage";
+import Detail from "./page/Detail";
 
 // Routing Tool
 import {Routes, Route} from "react-router-dom";
@@ -17,17 +18,13 @@ function App() {
   const [data, setData] = useState([]);
   const serverHost = "http://localhost:4000";
 
+
   const sendMessage = async (message)=>{
     message.userId = "@JejuAlrock";
     const requestURL = `${serverHost}/send`;
     const result = await axios.post(requestURL, {message})
     .then(result=>result)
     .catch(err=>err);
-
-    if(result.status === 200) {
-      getMessages();
-    }
-    else console.log(result);
   }
 
   const sendReply = async (message)=>{
@@ -36,83 +33,19 @@ function App() {
     const result = await axios.post(requestURL, {message})
     .then(result=>result)
     .catch(err=>err);
-
-    if(result.status === 200){
-      getMessages();
-    } else console.log(result);
   }
-
-  const getMessages = ()=>{
-    axios.get(serverHost)
-    .then(result=>{
-        setData(result.data);
-    })
-    .catch(err=>{
-        return new Error(err);
-    });
-  }
-
-  const updateMessage = async (message)=>{
-    const requestURL = `${serverHost}/update`;
-    const result = await axios.post(requestURL, {message})
-    .then(result=>result)
-    .catch(err=>err);
-
-    if(result.status === 200){
-      getMessages();
-    }
-    else console.log(result);
-  }
-
-  const removeMessage = async (messageId)=>{
-    const requestURL = `${serverHost}/remove`;
-    const result = await axios.post(requestURL, {message: {messageId}})
-    .then(result=>result)
-    .catch(err=>err);
-
-    if (result) getMessages();
-    else return new Error();
-  }
-
-  useEffect(()=>{
-    getMessages();
-  }, [])
 
   useEffect(()=>{
   }, [data]);
-
-
-  const HandleMessage = {
-    sendMessage, removeMessage, updateMessage, sendReply
-  }
 
   return (
     <div className="App">
       <Navbar></Navbar>
       <Routes>
-        <Route path="/" 
-          element={
-            <Plaza 
-              data={data} 
-              sendMessage={sendMessage} 
-              removeMessage={removeMessage} 
-              updateMessage={updateMessage} 
-              sendReply={sendReply}
-            />
-          }
-        /> 
-        <Route path="/mypage" 
-          element={
-            <Mypage 
-              data={data} 
-              sendMessage={sendMessage} 
-              removeMessage={removeMessage} 
-              updateMessage={updateMessage} 
-              sendReply={sendReply}
-            />
-          }
-        />
+        <Route path="/" element={<Plaza sendMessage={sendMessage} sendReply={sendReply}/>} /> 
+        <Route path="/mypage" element={<Mypage sendMessage={sendMessage} sendReply={sendReply} />} />
         <Route path="/login" element={<Login></Login>}></Route>
+        <Route path="/detail/:_id" element={<Detail/>}></Route>
       </Routes>
     </div>
   );

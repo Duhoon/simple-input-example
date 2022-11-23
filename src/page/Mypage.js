@@ -1,9 +1,36 @@
+// Tools
+import {useState, useEffect} from 'react';
+import axios from 'axios';
+
+// CSS
 import "./Mypage.css";
+
+// Componentes
 import Send from "../component/Send";
 import Message from "../component/Message";
-import { Fragment } from "react";
 
-const Mypage = ({data, sendMessage, sendReply, removeMessage, updateMessage})=>{
+// Controller
+import controller from "../controller";
+
+const Mypage = ({sendMessage, sendReply})=>{
+    const [data, setData] = useState([]);
+
+    const serverHost =  "http://localhost:4000";
+
+    const getMessages = ()=>{
+        axios.get(serverHost)
+        .then(result=>{
+            setData(result.data);
+        })
+        .catch(err=>{
+            return new Error(err);
+        });
+    }
+
+    useEffect(()=>{
+        getMessages();
+    },[])
+
     return (
         <div className="wrapper">
             <div className="content-width">
@@ -21,18 +48,20 @@ const Mypage = ({data, sendMessage, sendReply, removeMessage, updateMessage})=>{
                 <p className="explain">
                     안녕하세요 처음 인사드리도록 하겠습니다. 저는 제주알락입니다.
                 </p>
+                <div className="btn-group">
+                    <button className="btn-primary">
+                        팔로우하기
+                    </button>
+                </div>
             </div>
             <div className="contents">
                 <div className="mb-4 py-4 px-4 border-b-2">
-                    <Send sendMessage={sendMessage}></Send>
+                    <Send></Send>
                 </div>
         {data.map(message=>{
             return (
-                <Fragment key={message._id}>
-                    <Message message={message}  sendMessage={sendReply} removeMessage={removeMessage} updateMessage={updateMessage}>
-                    </Message>
-                    {message.reply.map(reply=>{return <Message message={reply} key={reply._id} isReply={true}></Message>})}
-                </Fragment>
+                <Message key={message._id} message={message}>
+                </Message>
             )
         })}
             </div>

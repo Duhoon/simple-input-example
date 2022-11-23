@@ -52,14 +52,12 @@
     transform : translate(-50%, -50%);
   }
 
-  
-
   .message-body {
     min-height : 150px;
   }
 
   .message {
-    @apply border-b-2;
+    @apply block border-b-2 hover:bg-zinc-100 hover:cursor-pointer;
   }
 
   .dropdown {
@@ -74,8 +72,6 @@
   .image-upload-input{
     display:none;
   }
-
-
 
 }
 
