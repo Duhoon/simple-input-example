@@ -6,23 +6,22 @@ import axios from "axios";
 import Send from "../component/Send";
 import Message from "../component/Message";
 
-const Plaza = ({sendMessage})=>{
+const Plaza = (props)=>{
     const [data, setData] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     const serverHost =  "http://localhost:4000";
 
     const getMessages = ()=>{
+        setIsLoading(true);
         axios.get(serverHost)
         .then(result=>{
             setData(result.data);
+            setIsLoading(false);
         })
         .catch(err=>{
             return new Error(err);
         });
-    }
-
-    const clickMessage = (e)=>{
-        if (e.target !== e.currentTarget) return;
     }
 
     useEffect(()=>{
@@ -41,10 +40,14 @@ const Plaza = ({sendMessage})=>{
             </div>
             <div className="content-width">
                 {data.map(message=>{
-                    return (
-                        <Message key={message._id} message={message}></Message>
-                    )
-                })} 
+                    return <Message key={message._id} message={message}></Message>
+                })}
+
+                {isLoading ?
+                    <div className="flex justify-center mt-4">
+                        <img src="https://i.gifer.com/ZKZg.gif" width="50px" height="50px"/>
+                    </div>
+                : <></>}
             </div>
       </div>
     )

@@ -14,8 +14,6 @@ import Detail from "./page/Detail";
 import {Routes, Route} from "react-router-dom";
 
 function App() {
-
-  const [data, setData] = useState([]);
   const serverHost = "http://localhost:4000";
 
 
@@ -35,17 +33,16 @@ function App() {
     .catch(err=>err);
   }
 
-  useEffect(()=>{
-  }, [data]);
-
   return (
     <div className="App">
       <Navbar></Navbar>
       <Routes>
-        <Route path="/" element={<Plaza sendMessage={sendMessage} sendReply={sendReply}/>} /> 
-        <Route path="/mypage" element={<Mypage sendMessage={sendMessage} sendReply={sendReply} />} />
+        <Route path="/" element={<Plaza/>} /> 
+        <Route path="/mypage" element={<Mypage/>} />
         <Route path="/login" element={<Login></Login>}></Route>
-        <Route path="/detail/:_id" element={<Detail/>}></Route>
+        <Route 
+          path="/detail/:_id" 
+          element={<Detail />}></Route>
       </Routes>
     </div>
   );

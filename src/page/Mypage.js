@@ -12,7 +12,7 @@ import Message from "../component/Message";
 // Controller
 import controller from "../controller";
 
-const Mypage = ({sendMessage, sendReply})=>{
+const Mypage = (props)=>{
     const [data, setData] = useState([]);
 
     const serverHost =  "http://localhost:4000";

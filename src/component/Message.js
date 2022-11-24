@@ -25,12 +25,8 @@ const Message = (props)=>{
     const {message} = props;
     const isReply = props.isReply || false;
 
-    const openReplyHandler = ()=>{
+    const toggleReplyHandler = ()=>{
         setOpenReply(!openReply);
-    }
-
-    const closeReplyHandler = ()=>{
-        setOpenReply(false);
     }
 
     const clickDropdownHandler = ()=>{
@@ -59,14 +55,17 @@ const Message = (props)=>{
         setContent(e.target.value);
     }
     
+    // deprecated
     const clickMessage = (e)=>{
-        if (e.target !== e.currentTarget) return;
+        console.log(e.target);
+        console.log(e.currentTarget);
+        if (e.target !== e.currentTarget) e.preventDefault();
     }
     
 
     return (        
         
-        <Link className="message p-4" to={"/detail/"+message._id} onClick={clickMessage} aria-label="message">
+        <div className="message p-4" aria-label="message">
             <div className="message-header flex w-full">
             <div className="profile-wrapper shrink-0 w-20 h-20 rounded-full relative overflow-hidden">
                 <img className="absolute" src="https://bit.ly/3UJrYQz"/>
@@ -95,7 +94,7 @@ const Message = (props)=>{
             : <></>
         }
 
-            <div className="message-body py-4">
+            <Link className="message-body block py-4" to={"/detail/"+message._id}>
         {isUpdate ?
             <div>
                 <div aria-label="update">
@@ -118,7 +117,7 @@ const Message = (props)=>{
                 {message.content}
             </p>
         }
-            </div> {/* Message Body */}
+            </Link> {/* Message Body */}
 
             <div className="message-tail flex mb-2 justify-evenly w-full">
                 <div className="message-btn flex shrink-0">
@@ -145,7 +144,7 @@ const Message = (props)=>{
                 </div>
             { !isReply ?
                 <div className="shrink-0">
-                    <button onClick={openReplyHandler}>
+                    <button onClick={toggleReplyHandler}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                         </svg>
@@ -158,12 +157,10 @@ const Message = (props)=>{
         {openReply ?
             <Send
                 messageId={message._id} 
-                sendMessage={controller.sendMessage} 
-                updateMessage={controller.updateMessage()} 
-                closeReplyHandler={closeReplyHandler}>
+                closeReplyHandler={toggleReplyHandler}>
             </Send> 
             : <></>}
-        </Link>
+        </div>
     )
 }
 

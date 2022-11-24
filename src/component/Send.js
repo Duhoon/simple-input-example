@@ -7,7 +7,7 @@ import controller from "../controller/index.js";
 const Send = ({messageId, closeReplyHandler})=>{
     const [message, setMessage] = useState("");
     const [image, setImage] = useState("");
-    const [isReply, setIsReply] = useState(false);
+    const [isReply, setIsReply] = useState(messageId ? true : false);
 
     const messageChangeHandler = (e)=>{
         setMessage(e.target.value);
@@ -29,7 +29,7 @@ const Send = ({messageId, closeReplyHandler})=>{
         if (!isReply)
         controller.sendMessage({content:message,image});
         else {
-            controller.sendMessage({content:message,image, toReply:messageId})
+            controller.sendMessage({content:message,image, replyTo:messageId})
             closeReplyHandler()
         }
         setMessage("");
@@ -37,7 +37,6 @@ const Send = ({messageId, closeReplyHandler})=>{
     }
 
     useEffect(()=>{
-        console.log(image);
     }, [image])
 
     useEffect(()=>{

@@ -7,24 +7,27 @@ import axios from 'axios';
 import Message from "../component/Message";
 
 const Detail = (props)=>{
+    // Data State
     const [data, setData] = useState([]);
 
-    const serverHost = "http://localhost:4000";
+    // Client URL params
     const params = useParams();
+    const serverHost = "http://localhost:4000";
 
-    const getDetail = async()=>{
+    // Request data to Server
+    const getDetail= async ()=>{
         const result = await axios.get(`${serverHost}/detail/${params._id}`)
         .then(result=>result)
         .catch(err=>err)
-
-        if (result) {
-            setData(result.data);
-        } else return;
+        
+        if(result.status === 200) setData(result.data);
+        else return;
     }
 
+    // Page Rendering
     useEffect(()=>{
         getDetail();
-    },[])
+    },[params])
 
     return (
         <div className="wrapper" aria-label="plaza">
@@ -37,7 +40,7 @@ const Detail = (props)=>{
                 {
                     data.map((message)=>{
                         return <Message key={message._id} message={message}></Message>
-                    })    
+                    })
                 }
             </div>
       </div>
