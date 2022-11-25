@@ -1,7 +1,11 @@
 // Tools
 import {useState, useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import {useParams, useNavigate} from 'react-router-dom';
 import axios from 'axios';
+
+
+// CSS
+import "./Detail.css";
 
 // Components
 import Message from "../component/Message";
@@ -9,10 +13,12 @@ import Message from "../component/Message";
 const Detail = (props)=>{
     // Data State
     const [data, setData] = useState([]);
-
     // Client URL params
     const params = useParams();
     const serverHost = "http://localhost:4000";
+
+    // Navigator
+    const navigator = useNavigate();
 
     // Request data to Server
     const getDetail= async ()=>{
@@ -29,12 +35,21 @@ const Detail = (props)=>{
         getDetail();
     },[params])
 
+    const clickBackHandler = ()=>{
+        navigator(-1);
+    }
+
     return (
         <div className="wrapper" aria-label="plaza">
             <div className="content-width">
-                <div className="box-colored" aria-label="title">
-                    <div className="p-4 text-xl text-center">ZET</div>
-                </div>
+                <button className="box-colored" aria-label="title" onClick={clickBackHandler}>
+                    <div className="p-4 flex">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 inline">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                        </svg>
+                        <span className="font-bold">Back</span>
+                    </div>
+                </button>
             </div>
             <div className="content-width">
                 {
