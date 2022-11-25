@@ -2,5 +2,7 @@
 @tailwind components;
 
 @layer components{
-    
+    .box-update{
+        pointer-events: none;
+    }
 }

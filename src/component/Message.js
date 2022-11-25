@@ -97,13 +97,13 @@ const Message = (props)=>{
             <Link className="message-body block py-4" to={"/detail/"+message._id}>
         {isUpdate ?
             <div>
-                <div aria-label="update">
+                <div className="box-update" aria-label="update">
                     <textarea className="update-textarea w-full ring ring-fuchsia-300" 
-                    rows="5" 
-                    value={content} 
-                    placeholder="내용을 입력하세요."
-                    onChange={contentChangeHandler}  
-                >
+                        rows="5" 
+                        value={content} 
+                        placeholder="내용을 입력하세요."
+                        onChange={contentChangeHandler}  
+                    >
                 </textarea>
                 </div>
                 <div aria-label="update-button-wrapper" className="py-2 flex justify-end">
