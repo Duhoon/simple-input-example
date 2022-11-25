@@ -1,6 +1,3 @@
-import {useState, useEffect} from "react";
-import axios from 'axios';
-
 // Components
 import Navbar from "./component/Navbar.js";
 
@@ -14,25 +11,6 @@ import Detail from "./page/Detail";
 import {Routes, Route} from "react-router-dom";
 
 function App() {
-  const serverHost = "http://localhost:4000";
-
-
-  const sendMessage = async (message)=>{
-    message.userId = "@JejuAlrock";
-    const requestURL = `${serverHost}/send`;
-    const result = await axios.post(requestURL, {message})
-    .then(result=>result)
-    .catch(err=>err);
-  }
-
-  const sendReply = async (message)=>{
-    message.userId = "@JejuAlrock";
-    const requestURL = `${serverHost}/reply`;
-    const result = await axios.post(requestURL, {message})
-    .then(result=>result)
-    .catch(err=>err);
-  }
-
   return (
     <div className="App">
       <Navbar></Navbar>

@@ -27,6 +27,10 @@ const Mypage = (props)=>{
         });
     }
 
+    const getMessageSended = (message)=>{
+        setData([message].concat(data));
+    }
+
     useEffect(()=>{
         getMessages();
     },[])
@@ -56,7 +60,7 @@ const Mypage = (props)=>{
             </div>
             <div className="contents">
                 <div className="mb-4 py-4 px-4 border-b-2">
-                    <Send></Send>
+                    <Send getMessageSended={getMessageSended}></Send>
                 </div>
         {data.map(message=>{
             return (

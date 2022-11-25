@@ -4,7 +4,7 @@ import {useState, useEffect} from "react";
 // Controller
 import controller from "../controller/index.js";
 
-const Send = ({messageId, closeReplyHandler})=>{
+const Send = ({messageId, closeReplyHandler, getMessageSended})=>{
     const [message, setMessage] = useState("");
     const [image, setImage] = useState("");
     const [isReply, setIsReply] = useState(messageId ? true : false);
@@ -25,11 +25,13 @@ const Send = ({messageId, closeReplyHandler})=>{
         reader.readAsDataURL(img);
     }
 
-    const sendHandler = (e)=>{
-        if (!isReply)
-        controller.sendMessage({content:message,image});
+    const sendHandler = async (e)=>{
+        if (!isReply){
+            let result = await controller.sendMessage({content:message,image});
+            getMessageSended(result);
+        }
         else {
-            controller.sendMessage({content:message,image, replyTo:messageId})
+            let result = await controller.sendMessage({content:message,image, replyTo:messageId})
             closeReplyHandler()
         }
         setMessage("");

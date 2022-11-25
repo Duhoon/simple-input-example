@@ -24,6 +24,10 @@ const Plaza = (props)=>{
         });
     }
 
+    const getMessageSended = (message)=>{
+        setData([message].concat(data));
+    }
+
     useEffect(()=>{
         getMessages();
     },[])
@@ -35,7 +39,7 @@ const Plaza = (props)=>{
                     <div className="p-4 text-xl text-center">ZET</div>
                 </div>
                 <div className="mt-2 content-width border-b-2 p-4">
-                    <Send></Send>
+                    <Send getMessageSended={getMessageSended}></Send>
                 </div>
             </div>
             <div className="content-width">

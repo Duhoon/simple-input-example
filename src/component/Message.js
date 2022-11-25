@@ -16,7 +16,8 @@ const datetimeToString = (time)=>{
 }
 
 const Message = (props)=>{
-    const [content, setContent] = useState(props.message.content)
+    const [content, setContent] = useState(props.message.content);
+    const [contentToUpdate, setContentToUpdate] = useState(props.message.content);
     const [openReply, setOpenReply] = useState(false);
     const [openDropdown, setOpenDropdown] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
@@ -37,8 +38,13 @@ const Message = (props)=>{
         setIsLike(!isLike);
     }
 
-    const clickSendUpdateHandler = ()=>{
-        controller.updateMessage({content, messageId: message._id});
+    const changeContentHandler = (e)=>{
+        setContentToUpdate(e.target.value);
+    }
+
+    const clickUpdateHandler = async (e)=>{
+        await controller.updateMessage({content: contentToUpdate, messageId: message._id});
+        setContent(contentToUpdate);
         deactivateUpdate();
     }
 
@@ -49,10 +55,6 @@ const Message = (props)=>{
 
     const deactivateUpdate = ()=>{
         setIsUpdate(false);
-    }
-    
-    const contentChangeHandler = (e)=>{
-        setContent(e.target.value);
     }
     
     // deprecated
@@ -96,25 +98,24 @@ const Message = (props)=>{
 
             <Link className="message-body block py-4" to={"/detail/"+message._id}>
         {isUpdate ?
-            <div>
+            <div onClick={(e)=>{e.preventDefault();}}>
                 <div className="box-update" aria-label="update">
                     <textarea className="update-textarea w-full ring ring-fuchsia-300" 
                         rows="5" 
-                        value={content} 
-                        placeholder="내용을 입력하세요."
-                        onChange={contentChangeHandler}  
+                        placeholder="내용을 입력해주세요."
+                        onChange={changeContentHandler}
                     >
                 </textarea>
                 </div>
                 <div aria-label="update-button-wrapper" className="py-2 flex justify-end">
                     <button className="btn-primary mr-2" onClick={deactivateUpdate}>취소</button>
-                    <button className="btn-primary" onClick={clickSendUpdateHandler}>수정</button>
+                    <button className="btn-primary" onClick={clickUpdateHandler}>수정</button>
                 </div>
             </div>
             :
             <p className="">
                 {isReply? <span className="font-bold">↳</span>: null }
-                {message.content}
+                {content}
             </p>
         }
             </Link> {/* Message Body */}
@@ -156,7 +157,7 @@ const Message = (props)=>{
             </div> {/* Message Tail */}
         {openReply ?
             <Send
-                messageId={message._id} 
+                messageId={message._id}
                 closeReplyHandler={toggleReplyHandler}>
             </Send> 
             : <></>}

@@ -10,6 +10,8 @@ export default {
         const result = await axios.post(requestURL, {message})
         .then(result=>result)
         .catch(err=>err);
+
+        return result.data;
     },
     
     sendReply : async (message)=>{
