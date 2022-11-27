@@ -1,5 +1,5 @@
 // Tools
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import axios from "axios";
 
 // Components
@@ -8,20 +8,44 @@ import Message from "../component/Message";
 
 const Plaza = (props)=>{
     const [data, setData] = useState([]);
+    // Reqeust more data Trigger
+    const [triggerLoad, setTriggerLoad] = useState(false);
+    // State for displaying Loading
     const [isLoading, setIsLoading] = useState(false);
+    const [scroll, setScroll] = useState({
+        offset: 0,
+        limit : 5,
+    })
+    // Ref for Trigger View
+    const target = useRef(null);
+    let observer;
 
-    const serverHost =  "http://localhost:4000";
+    const getUrlQuery =  new URL("http://localhost:4000");
 
-    const getMessages = ()=>{
+    const getMessages = async (offset, limit)=>{
         setIsLoading(true);
-        axios.get(serverHost)
+        getUrlQuery.searchParams.append("skip",`${offset}`);
+        getUrlQuery.searchParams.append("limit", `${limit}`);
+
+        const result = await axios.get(getUrlQuery)
         .then(result=>{
-            setData(result.data);
+            setData(data.concat(result.data));
+            setScroll({
+                ...scroll,
+                offset : offset + 5
+            });
             setIsLoading(false);
+
+            return result.data;
         })
         .catch(err=>{
             return new Error(err);
         });
+
+        if (result.length === 0 || !result) observer.disconnect();
+
+        getUrlQuery.searchParams.delete("skip");
+        getUrlQuery.searchParams.delete("limit");
     }
 
     const getMessageSended = (message)=>{
@@ -29,8 +53,21 @@ const Plaza = (props)=>{
     }
 
     useEffect(()=>{
-        getMessages();
+        observer = new IntersectionObserver((entries, observer)=>{
+            if (entries[0].isIntersecting === true){
+                setTriggerLoad(true);
+            } else return;
+        }, {threshold : 1});
+        observer.observe(target.current);
+        setTriggerLoad(true);
     },[])
+
+    useEffect(()=>{
+        if (triggerLoad === true){
+            setTriggerLoad(false);
+            getMessages(scroll.offset, scroll.limit);
+        }
+    }, [triggerLoad])
 
     return (
         <div className="wrapper" aria-label="plaza">
@@ -46,12 +83,11 @@ const Plaza = (props)=>{
                 {data.map(message=>{
                     return <Message key={message._id} message={message}></Message>
                 })}
-
+                <div className="flex flex-col items-center justify-center min-h-[200px]" id="target" ref={target}>
                 {isLoading ?
-                    <div className="flex justify-center mt-4">
-                        <img src="https://i.gifer.com/ZKZg.gif" width="50px" height="50px"/>
-                    </div>
+                    <img src="https://i.gifer.com/ZKZg.gif" width="50px" height="50px"/>
                 : <></>}
+                </div>
             </div>
       </div>
     )
