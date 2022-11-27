@@ -29,7 +29,7 @@ export default {
         .catch(err=>err);
     },
     
-    removeMessage : async (messageId)=>{
+    removeMessage : async (messageId, replyTo)=>{
         const requestURL = `${serverHost}/remove`;
         const result = await axios.post(requestURL, {message: {messageId}})
         .then(result=>result)

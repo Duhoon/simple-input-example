@@ -31,7 +31,7 @@ const Send = ({messageId, closeReplyHandler, getMessageSended})=>{
             getMessageSended(result);
         }
         else {
-            let result = await controller.sendMessage({content:message,image, replyTo:messageId})
+            let result = await controller.sendReply({content:message, image, replyTo:messageId})
             closeReplyHandler()
         }
         setMessage("");

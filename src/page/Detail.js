@@ -54,7 +54,7 @@ const Detail = (props)=>{
             <div className="content-width">
                 {
                     data.map((message)=>{
-                        return <Message key={message._id} message={message}></Message>
+                        return <Message key={message._id} message={message} isReply={message.replyTo ? true : false}></Message>
                     })
                 }
             </div>
