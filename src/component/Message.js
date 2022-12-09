@@ -1,5 +1,5 @@
 // Tools
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 
 // Components
@@ -30,6 +30,10 @@ const Message = (props)=>{
 
     const toggleReplyHandler = ()=>{
         setOpenReply(!openReply);
+    }
+
+    const clickImageHandler = (e)=>{
+        window.open(e.target.src,"_blank");
     }
 
     const clickDropdownHandler = ()=>{
@@ -65,7 +69,6 @@ const Message = (props)=>{
         console.log(e.currentTarget);
         if (e.target !== e.currentTarget) e.preventDefault();
     }
-    
 
     return (        
         
@@ -90,10 +93,11 @@ const Message = (props)=>{
                 </div>
             </div>
             </div> {/* Message Header */}
+                
 
         {message.image ? 
             <div className="image-wrapper my-3 w-full h-[300px] rounded-xl border-radius-full relative overflow-hidden">
-                <img className="absolute" src={message.image}/>
+                <img className="absolute" src={`http://localhost:4000${message.image}`} onClick={clickImageHandler}/>
             </div> 
             : <></>
         }
@@ -102,7 +106,7 @@ const Message = (props)=>{
         {openUpdate ?
             <div onClick={(e)=>{e.preventDefault();}}>
                 <div className="box-update" aria-label="update">
-                    <textarea className="update-textarea w-full ring ring-fuchsia-300" 
+                    <textarea className="update-textarea w-full ring ring-fuchsia-300"
                         rows="5" 
                         placeholder="내용을 입력해주세요."
                         onChange={changeContentHandler}

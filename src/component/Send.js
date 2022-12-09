@@ -1,12 +1,14 @@
 // Tools
 import {useState, useEffect} from "react";
+import axios from "axios";
 
 // Controller
 import controller from "../controller/index.js";
 
 const Send = ({messageId, closeReplyHandler, getMessageSended})=>{
     const [message, setMessage] = useState("");
-    const [image, setImage] = useState("");
+    const [imagePreview, setImagePreview] = useState("");
+    const [imageUpload, setImageUpload] = useState("");
     const [isReply, setIsReply] = useState(messageId ? true : false);
 
     const messageChangeHandler = (e)=>{
@@ -15,31 +17,45 @@ const Send = ({messageId, closeReplyHandler, getMessageSended})=>{
 
     const imageChangeHandler = async (e)=>{
         const filelist = e.target.files;
-        const img = filelist[0];
+        const image = filelist[0];
+        
         const reader = new FileReader();
 
-        reader.onload = () => {
-            setImage(reader.result);
-        }
+        const data = new FormData();
+        data.append("image",filelist[0]);
 
-        reader.readAsDataURL(img);
+        reader.onload = () => {
+            setImagePreview(reader.result);
+        }
+        reader.readAsDataURL(image);
+
+        const result = await axios.post(
+            "http://localhost:4000/uploadImage",
+            data,
+            {headers:{
+                "Content-Type": "multipart/form-data;",
+                "Accept" : "*/*",
+            }}
+        ).then(result=>{
+            setImageUpload(result.data.path);
+        })
     }
 
     const sendHandler = async (e)=>{
         if (!isReply){
-            let result = await controller.sendMessage({content:message,image});
+            let result = await controller.sendMessage({content:message,image:imageUpload});
             getMessageSended(result);
         }
         else {
-            let result = await controller.sendReply({content:message, image, replyTo:messageId})
+            let result = await controller.sendReply({content:message, image:imageUpload, replyTo:messageId})
             closeReplyHandler()
         }
         setMessage("");
-        setImage("");
+        setImagePreview("");
     }
 
     useEffect(()=>{
-    }, [image])
+    }, [imagePreview])
 
     useEffect(()=>{
         if (messageId){
@@ -49,9 +65,9 @@ const Send = ({messageId, closeReplyHandler, getMessageSended})=>{
 
     return (
         <div className="card">
-            {image ? 
+            {imagePreview ? 
                 <div className="image-wrapper mb-3 w-full h-[300px] rounded-xl border-radius-full relative overflow-hidden">
-                    <img className="absolute" src={image}/>
+                    <img className="absolute" src={imagePreview}/>
                 </div> 
                 : <></>
             }

@@ -8,7 +8,8 @@ I want to follow Twitter in design view.
 
 You can run this example on React Server by `npm run start` in your shell.
 
-I want to connect on discord Channel!!!!!!!
+if you want to see note, please come to my blog,
+https://velog.io/@jejualrock/series/Simple-SNS
 
 Thank you!
 

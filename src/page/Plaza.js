@@ -8,7 +8,7 @@ import Message from "../component/Message";
 
 const Plaza = (props)=>{
     const [data, setData] = useState([]);
-    // Reqeust more data Trigger
+    // Trigger to reqeust more data
     const [triggerLoad, setTriggerLoad] = useState(false);
     // State for displaying Loading
     const [isLoading, setIsLoading] = useState(false);
@@ -22,6 +22,7 @@ const Plaza = (props)=>{
 
     const getUrlQuery =  new URL("http://localhost:4000");
 
+    // Fetch for request data to Server
     const getMessages = async (offset, limit)=>{
         setIsLoading(true);
         getUrlQuery.searchParams.append("skip",`${offset}`);
@@ -52,6 +53,7 @@ const Plaza = (props)=>{
         setData([message].concat(data));
     }
 
+    // init observer
     useEffect(()=>{
         observer = new IntersectionObserver((entries, observer)=>{
             if (entries[0].isIntersecting === true){
@@ -62,6 +64,7 @@ const Plaza = (props)=>{
         setTriggerLoad(true);
     },[])
 
+    // trigger activate
     useEffect(()=>{
         if (triggerLoad === true){
             setTriggerLoad(false);
@@ -83,7 +86,7 @@ const Plaza = (props)=>{
                 {data.map(message=>{
                     return <Message key={message._id} message={message}></Message>
                 })}
-                <div className="flex flex-col items-center justify-center min-h-[200px]" id="target" ref={target}>
+                <div className="flex flex-col items-center justify-center min-h-[200px]" ref={target}>
                 {isLoading ?
                     <img src="https://i.gifer.com/ZKZg.gif" width="50px" height="50px"/>
                 : <></>}
