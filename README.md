@@ -13,4 +13,8 @@ https://velog.io/@jejualrock/series/Simple-SNS
 
 Thank you!
 
+------------------------------------------
+
+You can see soon this client app in web!
+
 © JejuAlrock
