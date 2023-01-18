@@ -1,13 +1,18 @@
-name: deployClient
-on: [push]
+name: React Build
+on:
+  push:
+    branches:
+      - master
 
-jobs: 
-  build: 
-    name: Hello Github Action
+jobs:
+  build:
     runs-on: ubuntu-18.04
     steps:
-      - name: checkout source code
+      - name: Checkout source code.
         uses: actions/checkout@master
       
-      - name: echo Hello
-        run: echo "Hello"
+      - name: Install Dependencies
+        run: npm install
+
+      - nmae: Build
+        run: npm run build
